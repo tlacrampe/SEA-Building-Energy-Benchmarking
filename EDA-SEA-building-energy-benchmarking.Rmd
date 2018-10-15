@@ -18,7 +18,7 @@ output:
 #### Loading the dataset and libraries
 
 ```{r}
-energyDat = read.csv("sea-building-energy-benchmarking/2015-building-energy-benchmarking.csv", stringsAsFactors = FALSE)
+energyDat = read.csv("sea-building-energy-benchmarking/2015-building-energy-benchmarking.csv")
 library(gmodels)
 library(tidyverse)
 ```
@@ -27,5 +27,22 @@ library(tidyverse)
 
 ```{r}
 str(energyDat)
+```
+
+#### Explaining the features of the data:
+
+For more details concerning the variables, please see the data dictionary stored in "variable-description.txt" within the sea-building-energy-benchmarking folder:
+
+# Exploring the numerical variables
+We'll focus on the variables: **YearBuilt**, **NumberOfFloors**, **PropertyGFATotal** (building and parking gross floor area), **ENERGYSTARScore**, **SiteEUIWN(kBtu/sf, normalized for weather)**, **Electricity** (kBtu), **NaturalGas** (kBtu), **TotalGHGEmissions**(kilograms of c02 equivalent per square foot)
+
+```{r}
+summary(energyDat$YearBuilt)
+summary(energyDat$NumberofFloors)
+summary(energyDat$PropertyGFATotal)
+summary(energyDat$SiteEUIWN.kBtu.sf.)
+summary(energyDat$Electricity.kBtu.)
+summary(energyDat$NaturalGas.kBtu.)
+summary(energyDat$GHGEmissionsIntensity.kgCO2e.ft2.)
 ```
 
