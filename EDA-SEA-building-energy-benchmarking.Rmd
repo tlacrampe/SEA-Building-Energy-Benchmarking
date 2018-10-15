@@ -1,0 +1,31 @@
+---
+title: "EDA of Seattle Building Energy Benchmarks"
+author: "Christopher Lacrampe"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: 
+  html_document:
+
+    code_folding: show
+    highlight: tango
+    theme: yeti
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+---
+
+# Exploring the structure of the datat
+
+#### Loading the dataset and libraries
+
+```{r}
+energyDat = read.csv("sea-building-energy-benchmarking/2015-building-energy-benchmarking.csv", stringsAsFactors = FALSE)
+library(gmodels)
+library(tidyverse)
+```
+
+#### Asessing the structure of the data
+
+```{r}
+str(energyDat)
+```
+
