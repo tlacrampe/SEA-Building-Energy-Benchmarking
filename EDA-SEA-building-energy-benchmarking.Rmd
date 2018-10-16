@@ -13,7 +13,7 @@ output:
     toc_float: yes
 ---
 
-# 1: Exploring the structure of the datat
+# 1: Exploring the structure of the data
 
 #### Loading the dataset and libraries
 
@@ -28,8 +28,10 @@ library(tidyverse)
 ```{r}
 str(energyDat2016)
 ```
-
+  
 #### Explaining the features of the data:
+
+From this output, we can see that the 2016 energy dataset has 3340 observations of 42 variables. Some of the variables we are interested in looking at include numerical variables **YearBuilt**, **NumberOfFloors**, **PropertyGFATotal** (building and parking gross floor area), **ENERGYSTARScore**, **SiteEUIWN** (kBtu/sf, normalized for weather), **Electricity** (kBtu), **NaturalGas** (kBtu), **TotalGHGEmissions** (kilograms of c02 equivalent per square foot), and categorical variables **NeighborhoodProperty**, **LargestPropertyUseType**, and **Outlier**.
 
 For more details concerning the variables, please see the data dictionary stored in "variable-description.txt" within the sea-building-energy-benchmarking folder:
 
@@ -74,7 +76,15 @@ boxplot(energyDat2016$NaturalGas.kBtu., main = "Boxplot of Natural gas usage", y
 hist(energyDat2016$NaturalGas.kBtu., main = "Histogram of Natural gas usage", xlab = "kilo Brittish thermal units")
 ```
 
-#### Computing variance and standard deviations for the numerical variables
+For the graphics concerning **YearBuilt** we can see from the boxplot is slightly right-skewed, from the histogram we see a lower number of property built years from 1930 to 1950, and we also see a smaller frequency bar for 2010+, presumably because this decade isn't over yet.  
+
+The boxplot and histogram concerning **PropertyGFATotal** are not very useful, we see a large collection within the first 25000 but there are also several extremely large values that might be skewing the scale.  
+
+The boxplot and histogram for **ENERGYSTARScore** is interestingly right-skewed as well. The fact that this variable is computed by an outside entity using similar data made my hypothesize that they would go for a more normal distribution, but from this histogram we can see that the median is relatively high (about 75).  
+
+The histogram and boxplots for the energy variables for Electricity and Natural Gas are similar to those of **PpropertyGFATotal** in that there are several large outliers that extend the ranges of the axis, making it difficult to discern the differences for the majority of the data.  
+
+#### Computing variance and standard deviations for the numerical variables  
 
 ```{r}
 var(energyDat2016$YearBuilt, na.rm=TRUE)
@@ -103,12 +113,20 @@ table(energyDat2016$LargestPropertyUseType)
 table(energyDat2016$Outlier)
 ```
 
+From the **NeighborhoodProperty** table, we can see that the Downtown, Queen Anne, East, and Greater Duwamish areas have the highest frequencies out of the other factors.  
+
+From the **LargestPropertyUseType** table, we can see that the Office and Multifamily Housing factors comprise the largest number of observations.  
+
+From the **Outlier** table, we can see that the vast majority of observations (3256) were not labeled as any level of outlier, but depending on the magnitudes of those outliers they could shift results.  
+  
 #### Finding the mode/central measure of the categorical variables
 ```{r}
 names(sort(-table(energyDat2016$Neighborhood)))[1]
 names(sort(-table(energyDat2016$LargestPropertyUseType)))[1]
 names(sort(-table(energyDat2016$Outlier)))[1]
 ```
+
+These computations confirm our initial assessment that the "Downtown" neighborhood has the largest proportion of **Neighborhood**, "Multifamily Housing" has the largest proportion of **LargestPropertyUseType**, and "" or the empty string has the largest proportion of **OUtlier**.
 
 #### Finding proprotion tables 
 
@@ -118,22 +136,26 @@ round(prop.table(table(energyDat2016$LargestPropertyUseType))*100, digits = 3)
 round(prop.table(table(energyDat2016$Outlier))*100, digits = 3)
 ```
 
+These tables make it easier to compare proportions across the various levels of each variable. For instance, the Multifamily Housing factor level of the **LargestPropertyUseType** variable comprises 47.844% of all observations.
+
 # 4: Exploring relationships between two variables
 
 #### 1. Does the **PropertyGFABuildingTotal** space have an impact on the **ENERGYSTARScore**?
 
 ```{r}
-plot(energyDat2016$ENERGYSTARScore, energyDat2016$PropertyGFATotal, main = "Relationship between property size and Energy score", xlab = "Size of property in square feet", ylab = "Energy star score out of 100")
+plot(energyDat2016$PropertyGFATotal, energyDat2016$ENERGYSTARScore, main = "Relationship between property size and Energy score", xlab = "Size of property in square feet", ylab = "Energy star score out of 100")
 cor(energyDat2016$ENERGYSTARScore, energyDat2016$PropertyGFATotal, use = "complete.obs")
 ```
 
+From these results we can see that there isn't a strong link between the **ENERGYSTARScore** and the **PropertyGFABuildingTotal**, with a small correlation of 0.057 and no visual linear relationships.  
 
 #### 2. Does the **YearBuilt** have an impact on the **ENERGYSTARScore**?
 ```{r}
-plot(energyDat2016$ENERGYSTARScore, energyDat2016$YearBuilt, main = "Relationship between the year built and Energy score", xlab = "Year of property construction", ylab = "Energy star score out of 100")
+plot(energyDat2016$YearBuilt, energyDat2016$ENERGYSTARScore, main = "Relationship between the year built and Energy score", xlab = "Year of property construction", ylab = "Energy star score out of 100")
 cor(energyDat2016$ENERGYSTARScore, energyDat2016$YearBuilt, use = "complete.obs")
 ```
 
+From these results we also can see that there isn't a strong link between the **ENERGYSTARScore** and **YearBuilt** variables, with an even smaller correlation of 0.012 and no visual linear relationship.  
 
 #### 3. Are the **Neighborhood** and **LargestPropertyUseType** related?
 ```{r}
@@ -142,4 +164,9 @@ popUse = energyDat2016$LargestPropertyUseType %in% c('Office', 'Multifamily Hous
 popRegion = energyDat2016$Neighborhood %in% c('DOWNTOWN','EAST','QUEEN ANNE','DUWAMISH')
 CrossTable(x = popUse, y = popRegion, chisq = TRUE)
 ```
+
+For our Chi-Square Independence test, we set the null hypothesis that there is no association between being in the top 4 largest neighborhoods and the main property use being either Multifamily Housing or Office space.  
+Our Chi^2 results of 59.314 with d.f. = 1 and p = 1.34416e^-14 so we reject the null hypothesis at our level of significance of 0.05 and conclude that there is an association between those two categories.
+
+
 
