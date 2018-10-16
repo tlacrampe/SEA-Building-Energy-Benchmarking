@@ -34,15 +34,64 @@ str(energyDat)
 For more details concerning the variables, please see the data dictionary stored in "variable-description.txt" within the sea-building-energy-benchmarking folder:
 
 # Exploring the numerical variables
-We'll focus on the variables: **YearBuilt**, **NumberOfFloors**, **PropertyGFATotal** (building and parking gross floor area), **ENERGYSTARScore**, **SiteEUIWN(kBtu/sf, normalized for weather)**, **Electricity** (kBtu), **NaturalGas** (kBtu), **TotalGHGEmissions**(kilograms of c02 equivalent per square foot)
+We'll focus on the variables: **YearBuilt**, **NumberOfFloors**, **PropertyGFATotal** (building and parking gross floor area), **ENERGYSTARScore**, **SiteEUIWN** (kBtu/sf, normalized for weather), **Electricity** (kBtu), **NaturalGas** (kBtu), **TotalGHGEmissions** (kilograms of c02 equivalent per square foot)
+
+#### Exploring the central and spread measures for numeric features
 
 ```{r}
 summary(energyDat$YearBuilt)
 summary(energyDat$NumberofFloors)
 summary(energyDat$PropertyGFATotal)
+summary(energyDat$ENERGYSTARScore)
 summary(energyDat$SiteEUIWN.kBtu.sf.)
 summary(energyDat$Electricity.kBtu.)
 summary(energyDat$NaturalGas.kBtu.)
 summary(energyDat$GHGEmissionsIntensity.kgCO2e.ft2.)
+```
+
+From these descriptive statistics we can see that for:  
+**YearBuilt** we have a range of 115 years, with a left-skewed distribution  
+**NumberofFloors** we have a very large range from 0 to 99 with a median of 4 and a mean of 4.682 (right-skewed). We also have 8 unreported values  
+**PropertyGFATotal** we have a range from 20000 to 2200000 with a median of 43855 and a mean of 90773 (the data is very right-skewed). We may have to adjust for some outliers  
+**ENERGYSTARScore** has a range from 1 to 100, with a median of 76 and a mean of 67.89 (left-skewed). We have the greatest number of missing values at 780.
+**SiteEUIWN.kBtu.sf.** has a range from 0 to 800.60, with a median of 40.9 and a mean of 57.58 (again the data is right-skewed)  
+**Electricity.kBtu.** has a range from 0 to 4726322 with a median of 1160236 and a mean of 3473209 (the data is also very right-skewed). Also important to note are the 10 unreported values  
+**NaturalGas.kBtu.** has a range of 0 to 6448438 with a median of 294577 and a mean of 125330 (the data is also very right-skewed). This variable is also missing ten values--perhaps from the same observations as the missing values for Electricity.kBtu  
+**GHGEmissionsIntensity.gjC02e.ft2.** has a range from 0 to 31 with a median of 0.46 and a mean of 0.9853 (the data is also right skewed). This variable is also missing ten values as well  
+
+#### Creating boxplots and histograms for the numerical variables  
+
+```{r}
+boxplot(energyDat$YearBuilt, main = "Year Built", ylab = "Year")
+hist(energyDat$YearBuilt, main = "Histogram of the Year Built", xlab = "Year")
+boxplot(energyDat$PropertyGFATotal, main = "Boxplot of Building and Parking Gross Floor area", ylab = "Total square feet")
+hist(energyDat$PropertyGFATotal, main = "Histogram of Building and Parking Gross Floor area", xlab = "Total square feet")
+boxplot(energyDat$ENERGYSTARScore, main = "Boxplot of ENERGYSTARScore", ylab = "Score out of 100")
+hist(energyDat$ENERGYSTARScore, main = "Histogram of ENERGYSTARScore", xlab = "Score out of 100")
+boxplot(energyDat$Electricity.kBtu., main = "Boxplot of Electricity usage", ylab = "kilo Brittish thermal units")
+hist(energyDat$Electricity.kBtu., main = "Histogram of Electricity usage", xlab = "kilo Brittish thermal units")
+boxplot(energyDat$NaturalGas.kBtu., main = "Boxplot of Natural gas usage", ylab = "kilo Brittish thermal units")
+hist(energyDat$NaturalGas.kBtu., main = "Histogram of Natural gas usage", xlab = "kilo Brittish thermal units")
+```
+
+#### Computing variance and standard deviations for the numerical variables
+
+```{r}
+var(energyDat$YearBuilt, na.rm=TRUE)
+sd(energyDat$YearBuilt,na.rm=TRUE)
+var(energyDat$NumberofFloors,na.rm=TRUE)
+sd(energyDat$NumberofFloors,na.rm=TRUE)
+var(energyDat$PropertyGFATotal,na.rm=TRUE)
+sd(energyDat$PropertyGFATotal,na.rm=TRUE)
+var(energyDat$ENERGYSTARScore,na.rm=TRUE)
+sd(energyDat$ENERGYSTARScore,na.rm=TRUE)
+var(energyDat$SiteEUIWN.kBtu.sf.,na.rm=TRUE)
+sd(energyDat$SiteEUIWN.kBtu.sf.,na.rm=TRUE)
+var(energyDat$Electricity.kBtu.,na.rm=TRUE)
+sd(energyDat$Electricity.kBtu.,na.rm=TRUE)
+var(energyDat$NaturalGas.kBtu.,na.rm=TRUE)
+sd(energyDat$NaturalGas.kBtu.,na.rm=TRUE)
+var(energyDat$GHGEmissionsIntensity.kgCO2e.ft2.,na.rm=TRUE)
+sd(energyDat$GHGEmissionsIntensity.kgCO2e.ft2.,na.rm=TRUE)
 ```
 

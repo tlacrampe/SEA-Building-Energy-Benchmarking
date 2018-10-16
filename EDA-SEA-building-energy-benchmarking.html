@@ -278,12 +278,12 @@ div.tocify {
 <span class="kw">library</span>(gmodels)</code></pre></div>
 <pre><code>## Warning: package 'gmodels' was built under R version 3.4.4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
-<pre><code>## -- Attaching packages -------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## -- Attaching packages -------------------------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --</code></pre>
 <pre><code>## v ggplot2 2.2.1     v purrr   0.2.4
 ## v tibble  1.4.1     v dplyr   0.7.4
 ## v tidyr   0.7.2     v stringr 1.2.0
 ## v readr   1.1.1     v forcats 0.2.0</code></pre>
-<pre><code>## -- Conflicts ----------------------- tidyverse_conflicts() --
+<pre><code>## -- Conflicts ----------------------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 </div>
@@ -341,7 +341,7 @@ div.tocify {
 </div>
 <div id="exploring-the-numerical-variables" class="section level1">
 <h1>Exploring the numerical variables</h1>
-<p>We’ll focus on the variables: <strong>YearBuilt</strong>, <strong>NumberOfFloors</strong>, <strong>PropertyGFATotal</strong> (building and parking gross floor area), <strong>ENERGYSTARScore</strong>, <strong>SiteEUIWN(kBtu/sf, normalized for weather)</strong>, <strong>Electricity</strong> (kBtu), <strong>NaturalGas</strong> (kBtu), <strong>TotalGHGEmissions</strong>(kilograms of c02 equivalent per square foot)</p>
+<p>We’ll focus on the variables: <strong>YearBuilt</strong>, <strong>NumberOfFloors</strong>, <strong>PropertyGFATotal</strong> (building and parking gross floor area), <strong>ENERGYSTARScore</strong>, <strong>SiteEUIWN</strong> (kBtu/sf, normalized for weather), <strong>Electricity</strong> (kBtu), <strong>NaturalGas</strong> (kBtu), <strong>TotalGHGEmissions</strong> (kilograms of c02 equivalent per square foot)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(energyDat<span class="op">$</span>YearBuilt)</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    1900    1947    1973    1968    1996    2015</code></pre>
@@ -351,6 +351,9 @@ div.tocify {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(energyDat<span class="op">$</span>PropertyGFATotal)</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   20000   28487   43855   90773   88428 2200000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(energyDat<span class="op">$</span>ENERGYSTARScore)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##    1.00   51.75   76.00   67.89   90.00  100.00     780</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(energyDat<span class="op">$</span>SiteEUIWN.kBtu.sf.)</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ##    0.00   29.70   40.90   57.59   65.58  800.60      10</code></pre>
@@ -363,6 +366,14 @@ div.tocify {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(energyDat<span class="op">$</span>GHGEmissionsIntensity.kgCO2e.ft2.)</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ##  0.0000  0.0800  0.4600  0.9853  1.1800 31.3800      10</code></pre>
+<p>From these descriptive statistics we can see that for:<br />
+<strong>YearBuilt</strong> we have a range of 115 years, with a left-skewed distribution<br />
+<strong>NumberofFloors</strong> we have a very large range from 0 to 99 with a median of 4 and a mean of 4.682 (right-skewed). We also have 8 unreported values<br />
+<strong>PropertyGFATotal</strong> we have a range from 20000 to 2200000 with a median of 43855 and a mean of 90773 (the data is very right-skewed). We may have to adjust for some outliers<br />
+<strong>SiteEUIWN.kBtu.sf.</strong> has a range from 0 to 800.60, with a median of 40.9 and a mean of 57.58 (again the data is right-skewed)<br />
+<strong>Electricity.kBtu.</strong> has a range from 0 to 4726322 with a median of 1160236 and a mean of 3473209 (the data is also very right-skewed). Also important to note are the 10 unreported values<br />
+<strong>NaturalGas.kBtu.</strong> has a range of 0 to 6448438 with a median of 294577 and a mean of 125330 (the data is also very right-skewed). This variable is also missing ten values–perhaps from the same observations as the missing values for Electricity.kBtu<br />
+<strong>GHGEmissionsIntensity.gjC02e.ft2.</strong> has a range from 0 to 31 with a median of 0.46 and a mean of 0.9853 (the data is also right skewed). This variable is also missing ten values as well</p>
 </div>
 
 
