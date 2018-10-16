@@ -119,3 +119,27 @@ round(prop.table(table(energyDat2016$Outlier))*100, digits = 3)
 ```
 
 # 4: Exploring relationships between two variables
+
+#### 1. Does the **PropertyGFABuildingTotal** space have an impact on the **ENERGYSTARScore**?
+
+```{r}
+plot(energyDat2016$ENERGYSTARScore, energyDat2016$PropertyGFATotal, main = "Relationship between property size and Energy score", xlab = "Size of property in square feet", ylab = "Energy star score out of 100")
+cor(energyDat2016$ENERGYSTARScore, energyDat2016$PropertyGFATotal, use = "complete.obs")
+```
+
+
+#### 2. Does the **YearBuilt** have an impact on the **ENERGYSTARScore**?
+```{r}
+plot(energyDat2016$ENERGYSTARScore, energyDat2016$YearBuilt, main = "Relationship between the year built and Energy score", xlab = "Year of property construction", ylab = "Energy star score out of 100")
+cor(energyDat2016$ENERGYSTARScore, energyDat2016$YearBuilt, use = "complete.obs")
+```
+
+
+#### 3. Are the **Neighborhood** and **LargestPropertyUseType** related?
+```{r}
+# focus upon the 'most popular uses' 
+popUse = energyDat2016$LargestPropertyUseType %in% c('Office', 'Multifamily Housing')
+popRegion = energyDat2016$Neighborhood %in% c('DOWNTOWN','EAST','QUEEN ANNE','DUWAMISH')
+CrossTable(x = popUse, y = popRegion, chisq = TRUE)
+```
+
