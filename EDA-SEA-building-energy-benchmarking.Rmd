@@ -13,12 +13,12 @@ output:
     toc_float: yes
 ---
 
-# Exploring the structure of the datat
+# 1: Exploring the structure of the datat
 
 #### Loading the dataset and libraries
 
 ```{r}
-energyDat = read.csv("sea-building-energy-benchmarking/2015-building-energy-benchmarking.csv")
+energyDat2016 = read.csv("sea-building-energy-benchmarking/2015-building-energy-benchmarking.csv")
 library(gmodels)
 library(tidyverse)
 ```
@@ -26,27 +26,27 @@ library(tidyverse)
 #### Asessing the structure of the data
 
 ```{r}
-str(energyDat)
+str(energyDat2016)
 ```
 
 #### Explaining the features of the data:
 
 For more details concerning the variables, please see the data dictionary stored in "variable-description.txt" within the sea-building-energy-benchmarking folder:
 
-# Exploring the numerical variables
+# 2: Exploring the numerical variables
 We'll focus on the variables: **YearBuilt**, **NumberOfFloors**, **PropertyGFATotal** (building and parking gross floor area), **ENERGYSTARScore**, **SiteEUIWN** (kBtu/sf, normalized for weather), **Electricity** (kBtu), **NaturalGas** (kBtu), **TotalGHGEmissions** (kilograms of c02 equivalent per square foot)
 
 #### Exploring the central and spread measures for numeric features
 
 ```{r}
-summary(energyDat$YearBuilt)
-summary(energyDat$NumberofFloors)
-summary(energyDat$PropertyGFATotal)
-summary(energyDat$ENERGYSTARScore)
-summary(energyDat$SiteEUIWN.kBtu.sf.)
-summary(energyDat$Electricity.kBtu.)
-summary(energyDat$NaturalGas.kBtu.)
-summary(energyDat$GHGEmissionsIntensity.kgCO2e.ft2.)
+summary(energyDat2016$YearBuilt)
+summary(energyDat2016$NumberofFloors)
+summary(energyDat2016$PropertyGFATotal)
+summary(energyDat2016$ENERGYSTARScore)
+summary(energyDat2016$SiteEUIWN.kBtu.sf.)
+summary(energyDat2016$Electricity.kBtu.)
+summary(energyDat2016$NaturalGas.kBtu.)
+summary(energyDat2016$GHGEmissionsIntensity.kgCO2e.ft2.)
 ```
 
 From these descriptive statistics we can see that for:  
@@ -62,36 +62,60 @@ From these descriptive statistics we can see that for:
 #### Creating boxplots and histograms for the numerical variables  
 
 ```{r}
-boxplot(energyDat$YearBuilt, main = "Year Built", ylab = "Year")
-hist(energyDat$YearBuilt, main = "Histogram of the Year Built", xlab = "Year")
-boxplot(energyDat$PropertyGFATotal, main = "Boxplot of Building and Parking Gross Floor area", ylab = "Total square feet")
-hist(energyDat$PropertyGFATotal, main = "Histogram of Building and Parking Gross Floor area", xlab = "Total square feet")
-boxplot(energyDat$ENERGYSTARScore, main = "Boxplot of ENERGYSTARScore", ylab = "Score out of 100")
-hist(energyDat$ENERGYSTARScore, main = "Histogram of ENERGYSTARScore", xlab = "Score out of 100")
-boxplot(energyDat$Electricity.kBtu., main = "Boxplot of Electricity usage", ylab = "kilo Brittish thermal units")
-hist(energyDat$Electricity.kBtu., main = "Histogram of Electricity usage", xlab = "kilo Brittish thermal units")
-boxplot(energyDat$NaturalGas.kBtu., main = "Boxplot of Natural gas usage", ylab = "kilo Brittish thermal units")
-hist(energyDat$NaturalGas.kBtu., main = "Histogram of Natural gas usage", xlab = "kilo Brittish thermal units")
+boxplot(energyDat2016$YearBuilt, main = "Year Built", ylab = "Year")
+hist(energyDat2016$YearBuilt, main = "Histogram of the Year Built", xlab = "Year")
+boxplot(energyDat2016$PropertyGFATotal, main = "Boxplot of Building and Parking Gross Floor area", ylab = "Total square feet")
+hist(energyDat2016$PropertyGFATotal, main = "Histogram of Building and Parking Gross Floor area", xlab = "Total square feet")
+boxplot(energyDat2016$ENERGYSTARScore, main = "Boxplot of ENERGYSTARScore", ylab = "Score out of 100")
+hist(energyDat2016$ENERGYSTARScore, main = "Histogram of ENERGYSTARScore", xlab = "Score out of 100")
+boxplot(energyDat2016$Electricity.kBtu., main = "Boxplot of Electricity usage", ylab = "kilo Brittish thermal units")
+hist(energyDat2016$Electricity.kBtu., main = "Histogram of Electricity usage", xlab = "kilo Brittish thermal units")
+boxplot(energyDat2016$NaturalGas.kBtu., main = "Boxplot of Natural gas usage", ylab = "kilo Brittish thermal units")
+hist(energyDat2016$NaturalGas.kBtu., main = "Histogram of Natural gas usage", xlab = "kilo Brittish thermal units")
 ```
 
 #### Computing variance and standard deviations for the numerical variables
 
 ```{r}
-var(energyDat$YearBuilt, na.rm=TRUE)
-sd(energyDat$YearBuilt,na.rm=TRUE)
-var(energyDat$NumberofFloors,na.rm=TRUE)
-sd(energyDat$NumberofFloors,na.rm=TRUE)
-var(energyDat$PropertyGFATotal,na.rm=TRUE)
-sd(energyDat$PropertyGFATotal,na.rm=TRUE)
-var(energyDat$ENERGYSTARScore,na.rm=TRUE)
-sd(energyDat$ENERGYSTARScore,na.rm=TRUE)
-var(energyDat$SiteEUIWN.kBtu.sf.,na.rm=TRUE)
-sd(energyDat$SiteEUIWN.kBtu.sf.,na.rm=TRUE)
-var(energyDat$Electricity.kBtu.,na.rm=TRUE)
-sd(energyDat$Electricity.kBtu.,na.rm=TRUE)
-var(energyDat$NaturalGas.kBtu.,na.rm=TRUE)
-sd(energyDat$NaturalGas.kBtu.,na.rm=TRUE)
-var(energyDat$GHGEmissionsIntensity.kgCO2e.ft2.,na.rm=TRUE)
-sd(energyDat$GHGEmissionsIntensity.kgCO2e.ft2.,na.rm=TRUE)
+var(energyDat2016$YearBuilt, na.rm=TRUE)
+sd(energyDat2016$YearBuilt,na.rm=TRUE)
+var(energyDat2016$NumberofFloors,na.rm=TRUE)
+sd(energyDat2016$NumberofFloors,na.rm=TRUE)
+var(energyDat2016$PropertyGFATotal,na.rm=TRUE)
+sd(energyDat2016$PropertyGFATotal,na.rm=TRUE)
+var(energyDat2016$ENERGYSTARScore,na.rm=TRUE)
+sd(energyDat2016$ENERGYSTARScore,na.rm=TRUE)
+var(energyDat2016$SiteEUIWN.kBtu.sf.,na.rm=TRUE)
+sd(energyDat2016$SiteEUIWN.kBtu.sf.,na.rm=TRUE)
+var(energyDat2016$Electricity.kBtu.,na.rm=TRUE)
+sd(energyDat2016$Electricity.kBtu.,na.rm=TRUE)
+var(energyDat2016$NaturalGas.kBtu.,na.rm=TRUE)
+sd(energyDat2016$NaturalGas.kBtu.,na.rm=TRUE)
+var(energyDat2016$GHGEmissionsIntensity.kgCO2e.ft2.,na.rm=TRUE)
+sd(energyDat2016$GHGEmissionsIntensity.kgCO2e.ft2.,na.rm=TRUE)
 ```
 
+# 3: Exploring the categorical variables  
+Let's take a deeper look into the categorical variables of interest: **NeighborhoodProperty**, **LargestPropertyUseType**, and **Outlier**  
+```{r}
+table(energyDat2016$Neighborhood)
+table(energyDat2016$LargestPropertyUseType)
+table(energyDat2016$Outlier)
+```
+
+#### Finding the mode/central measure of the categorical variables
+```{r}
+names(sort(-table(energyDat2016$Neighborhood)))[1]
+names(sort(-table(energyDat2016$LargestPropertyUseType)))[1]
+names(sort(-table(energyDat2016$Outlier)))[1]
+```
+
+#### Finding proprotion tables 
+
+```{r}
+round(prop.table(table(energyDat2016$Neighborhood))*100, digits = 3)
+round(prop.table(table(energyDat2016$LargestPropertyUseType))*100, digits = 3)
+round(prop.table(table(energyDat2016$Outlier))*100, digits = 3)
+```
+
+# 4: Exploring relationships between two variables
