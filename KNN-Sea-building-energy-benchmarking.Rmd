@@ -22,7 +22,7 @@ output:
 library(gmodels) # useful library for CrossTabs/confusion matrices
 library(class) # has a knn function used to train the model
 library(tidyverse) # has useful libraries for cleaning and filtering data
-energyDat2016 = read.csv("sea-building-energy-benchmarking/2015-building-energy-benchmarking.csv")
+energyDat2016 = read.csv("sea-building-energy-benchmarking/2015-building-energy-benchmarking.csv", stringsAsFactors = FALSE)
 ```
 
 ### 1.2 Cleaning the data
@@ -35,13 +35,78 @@ energyDat2016 = tbl_df(filter(energyDat2016, Outlier == ""))
 energyDat2016 = as.data.frame(energyDat2016)
 ```
 
-#### 1.2.2 Create class variable from the Energy Star Score (Good = ENERGYSTARScore > 75, Bad = otherwise)
+#### 1.2.2 Create class variable from the Energy Star Score (Good = ENERGYSTARScore > 75, Bad = otherwise as per EnergyStar certification guidelines)
 
 ```{r}
-StarScore = ifelse(energyDat2016$ENERGYSTARScore > 75, "Good", "Bad")
+StarScore = ifelse(energyDat2016$ENERGYSTARScore >= 75, "Good", "Bad")
 energyDat2016$StarScore = StarScore
 energyDat2016$StarScore = as.factor(energyDat2016$StarScore)
 ```
+
+#### 1.2.3 Create a dataframe utilizing the numerical variables we want to include in our KNN model
+
+```{r}
+modelDat = select(energyDat2016, StarScore, YearBuilt, PropertyGFATotal, SiteEUIWN.kBtu.sf., Electricity.kBtu., NaturalGas.kBtu., GHGEmissionsIntensity.kgCO2e.ft2.)
+# remove NA values
+modelDat = na.omit(modelDat)
+```
+
+# 2. Transformation - normalizing numeric data
+
+#### 2.1 Create the normalize() function
+```{r}
+normalize <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x))) }
+```
+
+#### 2.2 Apply the normlize function to the data
+
+```{r}
+normalizedModelDat = as.data.frame(lapply(modelDat[2:7], normalize))
+```
+
+#### 2.3 Check if the normalize function worked properly
+
+```{r}
+summary(modelDat$YearBuilt)
+summary(normalizedModelDat$YearBuilt)
+```
+
+We can see that the YearBuilt vector was sucessfuly normalized between 0-1.
+
+# 3. Splitting the data and training the model
+
+#### 3.1 Splitting the dataset
+
+```{r}
+# add the result vector back before randomizing
+normalizedModelDat$StarScore = modelDat$StarScore
+set.seed(123)
+mod_rand = order(runif(2491))
+mod_train = normalizedModelDat[mod_rand[1:2000],]
+mod_test = normalizedModelDat[mod_rand[2000:2491],]
+
+# store the target variable as seperate vectors
+mod_train_labels = as.vector(mod_train$StarScore)
+mod_test_labels = as.vector(mod_test$StarScore)
+mod_train = mod_train[1:6]
+mod_test = mod_test[1:6]
+```
+
+#### 3.2 Training a model on the data
+
+```{r}
+mod_test_pred = knn(train = mod_train,test = mod_test,cl = mod_train_labels,k=5)
+```
+
+#### 3.3 Evaluating model Performance
+
+```{r}
+CrossTable(x = mod_test_labels, y = mod_test_pred, prop.chisq = FALSE)
+Accuracy = (145 + 178)/492
+Accuracy
+```
+
 
 
 
