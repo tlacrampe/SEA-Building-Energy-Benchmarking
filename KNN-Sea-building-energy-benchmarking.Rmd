@@ -105,8 +105,22 @@ mod_test_pred = knn(train = mod_train,test = mod_test,cl = mod_train_labels,k=5)
 CrossTable(x = mod_test_labels, y = mod_test_pred, prop.chisq = FALSE)
 Accuracy = (145 + 178)/492
 Accuracy
+Recall = 179 / (179 + 82)
+Recall
+Precision = 179/(179 + 86)
+Precision
+FalsePos = 86/179
+FalsePos
+FalseNeg = 82/145
+FalseNeg
 ```
 
+Our model accuracy is 65.7%, our model Recall is 68.6%, and our model Precision = 67.54%.
+
+Our model has a false positive rate of 48% and a false negative rate of 56.6%. 
+
+
+# 4 Improving model performance
 
 
 
