@@ -1,0 +1,38 @@
+---
+title: "KNN-SEA-building-energy-bechmarking"
+author: "Christopher Lacrampe"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: 
+  html_document:
+
+    code_folding: show
+    highlight: tango
+    theme: yeti
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+---
+
+
+# 1. Loading, cleaning, and preparing the data/libraries
+
+### 1.1 Loading libraries and datasets
+
+```{r}
+library(gmodels) # useful library for CrossTabs/confusion matrices
+library(class) # has a knn function used to train the model
+library(tidyverse) # has useful libraries for cleaning and filtering data
+energyDat2016 = read.csv("sea-building-energy-benchmarking/2015-building-energy-benchmarking.csv")
+```
+
+### 1.2 Cleaning the data
+
+#### 1.2.1 Removing outliers
+Our dataset has come prepared with an **Outlier** feature where the data controller has flagged outliers as "High" and "Low", we will remove those outliers
+
+```{r}
+energyDat2016 = tbl_df(filter(energyDat2016, Outlier == ""))
+energyDat2016 = as.data.frame(energyDat2016)
+```
+
+
