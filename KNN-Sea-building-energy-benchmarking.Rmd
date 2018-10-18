@@ -116,7 +116,7 @@ FalseNeg = 82/145
 FalseNeg
 ```
 
-Our model accuracy is 65.9%, our model Recall is 68.6%, and our model Precision = 67.54%.
+Our model accuracy is 65.9%, our model recall is 68.6%, and our model precision = 67.54%.
 
 Our model has a false-positive rate of 48% and a false-negative rate of 56.6%. 
 
@@ -171,7 +171,7 @@ FalseNeg = 61/151
 FalseNeg
 ```
 
-Our new model accuracy is 71.3%, our new model Recall is 76.6%, and our new model Precision = 71.4%.
+Our new model accuracy is 71.3%, our new model recall is 76.6%, and our new model precision = 71.4%.
 
 Our model has a new false-positive rate of 40% and a new false-negative rate of 40.3%. 
 
@@ -196,7 +196,7 @@ FalseNeg = 72/147
 FalseNeg
 ```
 
-Overall, decreasing our K yields a reduction in model performance, with Accuracy falling to 68.3%, recall falling to 72.4%, precision falling to 69.2%, false-positive rate increasing to 44%, and false-negative rate increasing to 49%.  
+Overall, decreasing our K yields a reduction in model performance, with accuracy falling to 68.3%, recall falling to 72.4%, precision falling to 69.2%, false-positive rate increasing to 44%, and false-negative rate increasing to 49%.  
 
 #### 4.1.6 Utilizing a larger K
 

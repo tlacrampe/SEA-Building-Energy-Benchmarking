@@ -279,12 +279,12 @@ div.tocify {
 <pre><code>## Warning: package 'gmodels' was built under R version 3.4.4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(class) <span class="co"># has a knn function used to train the model</span>
 <span class="kw">library</span>(tidyverse) <span class="co"># has useful libraries for cleaning and filtering data</span></code></pre></div>
-<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## -- Attaching packages ---------------------------------------------------------------------------------------- tidyverse 1.2.1 --</code></pre>
 <pre><code>## v ggplot2 2.2.1     v purrr   0.2.4
 ## v tibble  1.4.1     v dplyr   0.7.4
 ## v tidyr   0.7.2     v stringr 1.2.0
 ## v readr   1.1.1     v forcats 0.2.0</code></pre>
-<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+<pre><code>## -- Conflicts ------------------------------------------------------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">energyDat2016 =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;sea-building-energy-benchmarking/2015-building-energy-benchmarking.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</code></pre></div>
@@ -404,7 +404,7 @@ FalsePos</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FalseNeg =<span class="st"> </span><span class="dv">82</span><span class="op">/</span><span class="dv">145</span>
 FalseNeg</code></pre></div>
 <pre><code>## [1] 0.5655172</code></pre>
-<p>Our model accuracy is 65.9%, our model Recall is 68.6%, and our model Precision = 67.54%.</p>
+<p>Our model accuracy is 65.9%, our model recall is 68.6%, and our model precision = 67.54%.</p>
 <p>Our model has a false-positive rate of 48% and a false-negative rate of 56.6%.</p>
 </div>
 </div>
@@ -487,7 +487,7 @@ FalsePos</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FalseNeg =<span class="st"> </span><span class="dv">61</span><span class="op">/</span><span class="dv">151</span>
 FalseNeg</code></pre></div>
 <pre><code>## [1] 0.4039735</code></pre>
-<p>Our new model accuracy is 71.3%, our new model Recall is 76.6%, and our new model Precision = 71.4%.</p>
+<p>Our new model accuracy is 71.3%, our new model recall is 76.6%, and our new model precision = 71.4%.</p>
 <p>Our model has a new false-positive rate of 40% and a new false-negative rate of 40.3%.</p>
 <p>Overall, our model improved in accuracy, recall, and precision, while decreasing the false-positive and false-negative rates.</p>
 </div>
@@ -544,7 +544,7 @@ FalsePos</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FalseNeg =<span class="st"> </span><span class="dv">72</span><span class="op">/</span><span class="dv">147</span>
 FalseNeg</code></pre></div>
 <pre><code>## [1] 0.4897959</code></pre>
-<p>Overall, decreasing our K yields a reduction in model performance, with Accuracy falling to 68.3%, recall falling to 72.4%, precision falling to 69.2%, false-positive rate increasing to 44%, and false-negative rate increasing to 49%.</p>
+<p>Overall, decreasing our K yields a reduction in model performance, with accuracy falling to 68.3%, recall falling to 72.4%, precision falling to 69.2%, false-positive rate increasing to 44%, and false-negative rate increasing to 49%.</p>
 </div>
 <div id="utilizing-a-larger-k" class="section level4">
 <h4>4.1.6 Utilizing a larger K</h4>
