@@ -35,4 +35,13 @@ energyDat2016 = tbl_df(filter(energyDat2016, Outlier == ""))
 energyDat2016 = as.data.frame(energyDat2016)
 ```
 
+#### 1.2.2 Create class variable from the Energy Star Score (Good = ENERGYSTARScore > 75, Bad = otherwise)
+
+```{r}
+StarScore = ifelse(energyDat2016$ENERGYSTARScore > 75, "Good", "Bad")
+energyDat2016$StarScore = StarScore
+energyDat2016$StarScore = as.factor(energyDat2016$StarScore)
+```
+
+
 
