@@ -13,7 +13,7 @@ output:
     toc_float: yes
 ---
 
-The aim of this predictive model is to be able to classify buildings on the basis of being able to obtain Energy Star Certification (Energy Star Score >= 75). By training a Naive Bayes probabalistic model, we can classify other buildings in the Seattle area that have not enrolled in the energy star program, but have access to the same variables as our training and test sets.
+The aim of this predictive model is to be able to classify buildings on the basis of being able to obtain Energy Star Certification (Energy Star Score >= 75). By training a Naive Bayes probabilistic model, we can classify other buildings in the Seattle area that have not enrolled in the energy star program, but have access to the same variables as our training and test sets.
 
 # 1. Loading, cleaning, and preparing the data/libraries
 
@@ -66,8 +66,8 @@ mod_test = modelDat[mod_rand[2000:2491],]
 # store the target variable as seperate vectors
 mod_train_labels = as.factor(as.vector(mod_train$StarScore))
 mod_test_labels = as.factor(as.vector(mod_test$StarScore))
-mod_train = mod_train[2:6]
-mod_test = mod_test[2:6]
+mod_train = mod_train[2:7]
+mod_test = mod_test[2:7]
 ```
 
 #### 2.2 Training the NaiveBayes classifier on the test data
@@ -85,7 +85,7 @@ CrossTable(mod_test_pred, mod_test_labels,
            dnn=c('predicted','actual'))
 ```
 
-In this cross table, we find an accuracy of ```{r}(33+253)/491``` or 58.25%. We have a ```{r}198/(198+33)``` or 85.7% false-negative rate and a ```{r}8/(8+253)``` or 3.1% false-positive rate as well. The extremely high false-negative rate is alarming, as this would result in an energy-star score for buildings that would exclude them from becoming energy star certified when in actuality they would meet the requirements.
+In this cross table, we find an accuracy of ```{r}(47+251)/492``` or 60.6%. We have a ```{r}184/(184+47)``` or 79.7% false-negative rate and a ```{r}10/(10+251)``` or 3.8% false-positive rate as well. The extremely high false-negative rate is alarming, as this would result in an energy-star score for buildings that would exclude them from becoming energy star certified when in actuality they would meet the requirements.
 
 # 4. Improving model performance
 
