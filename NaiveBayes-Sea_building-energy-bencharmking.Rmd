@@ -91,3 +91,17 @@ In this cross table, we find an accuracy of ```{r}(33+253)/491``` or 58.25%. We 
 
 #### 4.1 Rebuilding the classifier but setting laplace = 1, and makeing new predictions
 
+```{r}
+naiveBayesClassifier = naiveBayes(mod_train, mod_train_labels, laplace = 1)
+mod_test_pred = predict(naiveBayesClassifier, mod_test)
+```
+
+#### 4.2 Evaluate the results. Did the Laplace estimator improve the results of the Naive Bayes classifier?
+
+```{r}
+CrossTable(mod_test_pred, mod_test_labels,
+           prop.chisq=FALSE,prop.t=FALSE,prop.r=FALSE,
+           dnn=c('predicted','actual'))
+```
+
+Comparing this cross-table to the originals, we can see that there is no performance increase from including the laplace transform. Intuitively, we could understand this as noting that there aren't any unique examples in the test set that aren't included in the training set. Thus the laplace transform doesn't resolve any such concerns where a unique situation would cause a probability of 0.
