@@ -44,10 +44,50 @@ energyDat2016$StarScore = StarScore
 energyDat2016$StarScore = as.factor(energyDat2016$StarScore)
 ```
 
-#### 1.2.3 Create a dataframe utilizing the numerical variables we want to include in our KNN model
+#### 1.2.3 Create a dataframe utilizing the numerical variables we want to include in our NaiveBayes model
 
 ```{r}
 modelDat = select(energyDat2016, StarScore, YearBuilt, PropertyGFATotal, SiteEUIWN.kBtu.sf., Electricity.kBtu., NaturalGas.kBtu., GHGEmissionsIntensity.kgCO2e.ft2.)
 # remove NA values
 modelDat = na.omit(modelDat)
 ```
+
+## 2. Splitting the data and training the model
+
+#### 2.1 Splitting the dataset
+
+```{r}
+# add the result vector back before randomizing
+set.seed(123)
+mod_rand = order(runif(2491))
+mod_train = modelDat[mod_rand[1:2000],]
+mod_test = modelDat[mod_rand[2000:2491],]
+
+# store the target variable as seperate vectors
+mod_train_labels = as.factor(as.vector(mod_train$StarScore))
+mod_test_labels = as.factor(as.vector(mod_test$StarScore))
+mod_train = mod_train[2:6]
+mod_test = mod_test[2:6]
+```
+
+#### 2.2 Training the NaiveBayes classifier on the test data
+
+```{r}
+naiveBayesMod = naiveBayes(mod_train, mod_train_labels)
+```
+
+#### 2.3 Evaluating model performance
+
+```{r}
+mod_test_pred = predict(naiveBayesMod, mod_test)
+CrossTable(mod_test_pred, mod_test_labels,
+           prop.chisq=FALSE,prop.t=FALSE,prop.r=FALSE,
+           dnn=c('predicted','actual'))
+```
+
+In this cross table, we find an accuracy of ```{r}(33+253)/491``` or 58.25%. We have a ```{r}198/(198+33)``` or 85.7% false-negative rate and a ```{r}8/(8+253)``` or 3.1% false-positive rate as well. The extremely high false-negative rate is alarming, as this would result in an energy-star score for buildings that would exclude them from becoming energy star certified when in actuality they would meet the requirements.
+
+# 4. Improving model performance
+
+#### 4.1 Rebuilding the classifier but setting laplace = 1, and makeing new predictions
+
