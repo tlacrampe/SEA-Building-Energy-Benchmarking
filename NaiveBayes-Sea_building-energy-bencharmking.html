@@ -1682,8 +1682,8 @@ div.tocify {
 <a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co"># store the target variable as seperate vectors</span></a>
 <a class="sourceLine" id="cb9-8" data-line-number="8">mod_train_labels =<span class="st"> </span><span class="kw">as.factor</span>(<span class="kw">as.vector</span>(mod_train<span class="op">$</span>StarScore))</a>
 <a class="sourceLine" id="cb9-9" data-line-number="9">mod_test_labels =<span class="st"> </span><span class="kw">as.factor</span>(<span class="kw">as.vector</span>(mod_test<span class="op">$</span>StarScore))</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">mod_train =<span class="st"> </span>mod_train[<span class="dv">2</span><span class="op">:</span><span class="dv">6</span>]</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">mod_test =<span class="st"> </span>mod_test[<span class="dv">2</span><span class="op">:</span><span class="dv">6</span>]</a></code></pre></div>
+<a class="sourceLine" id="cb9-10" data-line-number="10">mod_train =<span class="st"> </span>mod_train[<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>]</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">mod_test =<span class="st"> </span>mod_test[<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>]</a></code></pre></div>
 </div>
 <div id="training-the-naivebayes-classifier-on-the-test-data" class="section level4">
 <h4>2.2 Training the NaiveBayes classifier on the test data</h4>
@@ -1710,18 +1710,18 @@ div.tocify {
 ##              | actual 
 ##    predicted |       Bad |      Good | Row Total | 
 ## -------------|-----------|-----------|-----------|
-##          Bad |        33 |         8 |        41 | 
-##              |     0.143 |     0.031 |           | 
+##          Bad |        47 |        10 |        57 | 
+##              |     0.203 |     0.038 |           | 
 ## -------------|-----------|-----------|-----------|
-##         Good |       198 |       253 |       451 | 
-##              |     0.857 |     0.969 |           | 
+##         Good |       184 |       251 |       435 | 
+##              |     0.797 |     0.962 |           | 
 ## -------------|-----------|-----------|-----------|
 ## Column Total |       231 |       261 |       492 | 
 ##              |     0.470 |     0.530 |           | 
 ## -------------|-----------|-----------|-----------|
 ## 
 ## </code></pre>
-<p>In this cross table, we find an accuracy of <code>{r}(33+253)/491</code> or 58.25%. We have a <code>{r}198/(198+33)</code> or 85.7% false-negative rate and a <code>{r}8/(8+253)</code> or 3.1% false-positive rate as well. The extremely high false-negative rate is alarming, as this would result in an energy-star score for buildings that would exclude them from becoming energy star certified when in actuality they would meet the requirements.</p>
+<p>In this cross table, we find an accuracy of <code>{r}(47+251)/492</code> or 60.6%. We have a <code>{r}184/(184+47)</code> or 79.7% false-negative rate and a <code>{r}10/(10+251)</code> or 3.8% false-positive rate as well. The extremely high false-negative rate is alarming, as this would result in an energy-star score for buildings that would exclude them from becoming energy star certified when in actuality they would meet the requirements.</p>
 </div>
 </div>
 </div>
@@ -1752,11 +1752,11 @@ div.tocify {
 ##              | actual 
 ##    predicted |       Bad |      Good | Row Total | 
 ## -------------|-----------|-----------|-----------|
-##          Bad |        33 |         8 |        41 | 
-##              |     0.143 |     0.031 |           | 
+##          Bad |        47 |        10 |        57 | 
+##              |     0.203 |     0.038 |           | 
 ## -------------|-----------|-----------|-----------|
-##         Good |       198 |       253 |       451 | 
-##              |     0.857 |     0.969 |           | 
+##         Good |       184 |       251 |       435 | 
+##              |     0.797 |     0.962 |           | 
 ## -------------|-----------|-----------|-----------|
 ## Column Total |       231 |       261 |       492 | 
 ##              |     0.470 |     0.530 |           | 
