@@ -1,0 +1,54 @@
+---
+title: "DecisionTree-SEA-building-energy-bechmarking"
+author: "Christopher Lacrampe"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: 
+  html_document:
+
+    code_folding: show
+    highlight: tango
+    theme: yeti
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+---
+
+The aim of this predictive model is to be able to classify buildings on the basis of being able to obtain Energy Star Certification (Energy Star Score >= 75). By training a Deicision Tree, we can classify other buildings in the Seattle area that have not enrolled in the energy star program, but have access to the same variables as our training and test sets.
+
+# 1. Loading, cleaning, and preparing the data/libraries
+
+### 1.1 Loading libraries and datasets
+
+```{r}
+library(gmodels) # useful library for CrossTabs/confusion matrices
+library(C50) # has the C5.0 method used to train the decision tree model
+library(tidyverse) # has useful libraries for cleaning and filtering data
+energyDat2016 = read.csv("sea-building-energy-benchmarking/2015-building-energy-benchmarking.csv", stringsAsFactors = FALSE)
+```
+
+### 1.2 Cleaning the data
+
+#### 1.2.1 Removing outliers
+Our dataset has come prepared with an **Outlier** feature where the data controller has flagged outliers as "High" and "Low", we will remove those outliers
+
+```{r}
+energyDat2016 = tbl_df(filter(energyDat2016, Outlier == ""))
+energyDat2016 = as.data.frame(energyDat2016)
+```
+
+#### 1.2.2 Create class variable from the Energy Star Score (Good = ENERGYSTARScore > 75, Bad = otherwise as per EnergyStar certification guidelines)
+
+```{r}
+StarScore = ifelse(energyDat2016$ENERGYSTARScore >= 75, "Good", "Bad")
+energyDat2016$StarScore = StarScore
+energyDat2016$StarScore = as.factor(energyDat2016$StarScore)
+```
+
+#### 1.2.3 Create a dataframe utilizing the numerical variables we want to include in our KNN model
+
+```{r}
+modelDat = select(energyDat2016, StarScore, YearBuilt, PropertyGFATotal, SiteEUIWN.kBtu.sf., Electricity.kBtu., NaturalGas.kBtu., GHGEmissionsIntensity.kgCO2e.ft2.)
+# remove NA values
+modelDat = na.omit(modelDat)
+```
+a
