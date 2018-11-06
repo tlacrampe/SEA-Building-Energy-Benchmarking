@@ -44,11 +44,29 @@ energyDat2016$StarScore = StarScore
 energyDat2016$StarScore = as.factor(energyDat2016$StarScore)
 ```
 
-#### 1.2.3 Create a dataframe utilizing the numerical variables we want to include in our KNN model
+#### 1.2.3 Create a dataframe utilizing the variables we want to include in our model (this strips redundant variables that are identical to the others just measured in different units)
 
 ```{r}
 modelDat = select(energyDat2016, StarScore, YearBuilt, PropertyGFATotal, SiteEUIWN.kBtu.sf., Electricity.kBtu., NaturalGas.kBtu., GHGEmissionsIntensity.kgCO2e.ft2.)
 # remove NA values
 modelDat = na.omit(modelDat)
 ```
-a
+
+## 2. Splitting the data and training the model
+
+#### 2.1 Splitting the dataset
+
+```{r}
+# add the result vector back before randomizing
+set.seed(123)
+mod_rand = order(runif(2491))
+mod_train = modelDat[mod_rand[1:2000],]
+mod_test = modelDat[mod_rand[2000:2491],]
+
+# store the target variable as seperate vectors
+mod_train_labels = as.factor(as.vector(mod_train$StarScore))
+mod_test_labels = as.factor(as.vector(mod_test$StarScore))
+mod_train = mod_train[2:7]
+mod_test = mod_test[2:7]
+```
+
