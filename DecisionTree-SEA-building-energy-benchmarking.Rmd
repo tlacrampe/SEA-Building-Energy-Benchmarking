@@ -108,4 +108,37 @@ CrossTable(mod_test$StarScore, energy_pred,
            dnn = c('actual', 'predicted'))
 ```
 
+##### 2.2.3.3 Explain the results. Is this model a good model?
+
+From the CrossTable() we can see our model has an accuracy of (156+222/492) = 76.8%. This model also had 39 false negatives and 75 false positives. The false positive numbers are bad for our results, as they indicate responses the model would classify as "Good" energy efficient buildings when in actuality they would be "bad". We can improve upon our model by penalizing the false-positive predictions in the next sections.
+
+# 3. Improving the model performance
+
+#### 3.1.1. Use adaptive boosting methods to improve the accuracy of the previous decision tree
+We will boost with 10 trials as recommended by the publishers of the C5.0 algorithm (this often reduces the number of errors by up to 25%)
+
+```{r}
+energy_boost10 = C5.0(mod_train[-1], mod_train$StarScore, trials = 10)
+energy_boost10
+```
+
+From this output, we can see that the average tree size has shrunk to 6.9 layers from the original tree of 16 layers.
+
+#### 3.1.2 Use the energy_boost10 to generate predictions
+
+```{r}
+energy_boost_pred10 = predict(energy_boost10, mod_test)
+```
+
+#### 3.2.3 Evaluate the model results
+
+```{r}
+CrossTable(mod_test$StarScore, energy_boost_pred10,
+           prop.chisq = FALSE, prop.c = FALSE, prop.r = FALSE,
+           dnn = c('actual','predicted'))
+```
+
+This model has an accuracy of (159+218)/492 = 76.6%. Which is a .2% reduction in accuracy. We have 72 false positives (a reduction of 3 from the previous model) and 43 false negatives (an increase of 4 from the previous model). Overall, the reduction of false-positives with the minor reduction in accuracy could make this model preferred over the original.
+
+
 
