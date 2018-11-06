@@ -57,16 +57,55 @@ modelDat = na.omit(modelDat)
 #### 2.1 Splitting the dataset
 
 ```{r}
-# add the result vector back before randomizing
+# randomize the entries and split into training and test
 set.seed(123)
 mod_rand = order(runif(2491))
+
+# split the randomized set into a training set and test set
 mod_train = modelDat[mod_rand[1:2000],]
 mod_test = modelDat[mod_rand[2000:2491],]
 
 # store the target variable as seperate vectors
 mod_train_labels = as.factor(as.vector(mod_train$StarScore))
 mod_test_labels = as.factor(as.vector(mod_test$StarScore))
-mod_train = mod_train[2:7]
-mod_test = mod_test[2:7]
+
 ```
+
+#### 2.2 Training the model using C5.0 algorithm
+
+```{r}
+energy_model = C5.0(mod_train[-1], mod_train$StarScore)
+energy_model
+```
+
+##### 2.2.1 Explain the results of the training model
+
+We can see that our tree is 16 layers deep (can at worst have to compute 16 decisions), using 6 features and 2000 observation.
+
+##### 2.2.1 Graphing the tree
+
+```{r}
+summary(energy_model)
+```
+
+From this output, we can walk through the decision tree by following the different paths (thre tree is represented left to right, with the root on the top left). For instance, from the top we can see the initial node is based on brittish thermal units per square foot of the space being greater than 62.6.  
+
+At the bottom of the model, we can see a confusion matrix. The error rate is given as 24.5% (490 times), with 289 false positives and 201 false negatives. 
+
+#### 2.2.3 Evaluating model performance
+
+##### 2.2.3.1 Use the energy_model to predict on the test set
+
+```{r}
+energy_pred = predict(energy_model, mod_test)
+```
+
+##### 2.2.3.2 Use a cross-tab to evaluate the model's performance
+
+```{r}
+CrossTable(mod_test$StarScore, energy_pred,
+           prop.chisq = FALSE, prop.c = FALSE, prop.r = FALSE,
+           dnn = c('actual', 'predicted'))
+```
+
 
