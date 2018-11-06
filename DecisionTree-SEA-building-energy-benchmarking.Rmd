@@ -9,11 +9,11 @@ output:
     highlight: tango
     theme: yeti
     toc: yes
-    toc_depth: 4
+    toc_depth: 5
     toc_float: yes
 ---
 
-The aim of this predictive model is to be able to classify buildings on the basis of being able to obtain Energy Star Certification (Energy Star Score >= 75). By training a Deicision Tree, we can classify other buildings in the Seattle area that have not enrolled in the energy star program, but have access to the same variables as our training and test sets.
+The aim of this predictive model is to be able to classify buildings on the basis of being able to obtain Energy Star Certification (Energy Star Score >= 75). By training a Decision Tree, we can classify other buildings in the Seattle area that have not enrolled in the energy star program, but have access to the same variables as our training and test sets.
 
 # 1. Loading, cleaning, and preparing the data/libraries
 
@@ -52,7 +52,7 @@ modelDat = select(energyDat2016, StarScore, YearBuilt, PropertyGFATotal, SiteEUI
 modelDat = na.omit(modelDat)
 ```
 
-## 2. Splitting the data and training the model
+# 2. Splitting the data and training the model
 
 #### 2.1 Splitting the dataset
 
@@ -80,27 +80,27 @@ energy_model
 
 ##### 2.2.1 Explain the results of the training model
 
-We can see that our tree is 16 layers deep (can at worst have to compute 16 decisions), using 6 features and 2000 observation.
+We can see that our tree is 16 decisions deep (16 possible paths), using 6 features and 2000 observation.
 
-##### 2.2.1 Graphing the tree
+##### 2.2.2 Graphing the tree
 
 ```{r}
 summary(energy_model)
 ```
 
-From this output, we can walk through the decision tree by following the different paths (thre tree is represented left to right, with the root on the top left). For instance, from the top we can see the initial node is based on brittish thermal units per square foot of the space being greater than 62.6.  
+From this output, we can walk through the decision tree by following the different paths (the tree is represented left to right, with the root on the top left). For instance, from the top we can see the initial node is based on British thermal units per square foot of the space being greater than 62.6.  
 
 At the bottom of the model, we can see a confusion matrix. The error rate is given as 24.5% (490 times), with 289 false positives and 201 false negatives. 
 
-#### 2.2.3 Evaluating model performance
+##### 2.2.3 Evaluating model performance
 
-##### 2.2.3.1 Use the energy_model to predict on the test set
+###### 2.2.3.1 Use the energy_model to predict on the test set
 
 ```{r}
 energy_pred = predict(energy_model, mod_test)
 ```
 
-##### 2.2.3.2 Use a cross-tab to evaluate the model's performance
+###### 2.2.3.2 Use a cross-tab to evaluate the model's performance
 
 ```{r}
 CrossTable(mod_test$StarScore, energy_pred,
@@ -108,7 +108,7 @@ CrossTable(mod_test$StarScore, energy_pred,
            dnn = c('actual', 'predicted'))
 ```
 
-##### 2.2.3.3 Explain the results. Is this model a good model?
+###### 2.2.3.3 Explain the results. Is this model a good model?
 
 From the CrossTable() we can see our model has an accuracy of (156+222/492) = 76.8%. This model also had 39 false negatives and 75 false positives. The false positive numbers are bad for our results, as they indicate responses the model would classify as "Good" energy efficient buildings when in actuality they would be "bad". We can improve upon our model by penalizing the false-positive predictions in the next sections.
 
@@ -122,7 +122,7 @@ energy_boost10 = C5.0(mod_train[-1], mod_train$StarScore, trials = 10)
 energy_boost10
 ```
 
-From this output, we can see that the average tree size has shrunk to 6.9 layers from the original tree of 16 layers.
+From this output, we can see that the average tree size has shrunk to 6.9 possible decisions from the original tree of 16 decisions.
 
 #### 3.1.2 Use the energy_boost10 to generate predictions
 
@@ -166,4 +166,4 @@ CrossTable(mod_test$StarScore, energy_cost_pred,
            dnn = c('actual', 'predicted'))
 ```
 
-This model's accuracy has been reduced to (207 + 88)/492 = 59.96%. However, the false-positive errors have fallen drastically from 72 to 24. In exchange, the false-negatives have increased to a large count of 173. While the false-positives are less disireable for our application, the harsh polarization in accuracy and false-negative rates make this model less desireable than the others. For our purposes, the boosted model would be the best choice of the three.
+This model's accuracy has been reduced to (207 + 88)/492 = 59.96%. However, the false-positive errors have fallen drastically from 72 to 24. In exchange, the false-negatives have increased to a large count of 173. While the false-positives are less desirable for our application, the harsh polarization in accuracy and false-negative rates make this model less desirable than the others. For our purposes, the boosted model would be the best choice of the three.
