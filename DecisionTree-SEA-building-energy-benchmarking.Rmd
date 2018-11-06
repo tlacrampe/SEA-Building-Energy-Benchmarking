@@ -140,5 +140,30 @@ CrossTable(mod_test$StarScore, energy_boost_pred10,
 
 This model has an accuracy of (159+218)/492 = 76.6%. Which is a .2% reduction in accuracy. We have 72 false positives (a reduction of 3 from the previous model) and 43 false negatives (an increase of 4 from the previous model). Overall, the reduction of false-positives with the minor reduction in accuracy could make this model preferred over the original.
 
+#### 3.2.1 Use a cost method to penalize the false positive errors
 
+```{r}
+matrix_dimensions = list(c('Bad', 'Good'), c('Bad', 'Good'))
+names(matrix_dimensions) = c('predicted', 'actual')
+matrix_dimensions
 
+error_cost = matrix(c(0,4,1,0),nrow = 2,
+                    dimnames = matrix_dimensions)
+error_cost
+
+energy_cost = C5.0(mod_train[-1], mod_train$StarScore,
+                   costs = error_cost)
+
+summary(energy_cost)
+```
+
+#### 3.2.2 Are the predictions of this model better? Explain
+
+```{r}
+energy_cost_pred = predict(energy_cost, mod_test)
+CrossTable(mod_test$StarScore, energy_cost_pred,
+           prop.chisq = FALSE, prop.c = FALSE, prop.r = FALSE,
+           dnn = c('actual', 'predicted'))
+```
+
+This model's accuracy has been reduced to (207 + 88)/492 = 59.96%. However, the false-positive errors have fallen drastically from 72 to 24. In exchange, the false-negatives have increased to a large count of 173. While the false-positives are less disireable for our application, the harsh polarization in accuracy and false-negative rates make this model less desireable than the others. For our purposes, the boosted model would be the best choice of the three.
