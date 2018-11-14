@@ -54,3 +54,22 @@ pairs.panels(modelDat)
 In the upper right trianlge of the matrix we see the correlations between each of the numerical features. Along the main diagonal we see a histogram of each feature's distribution. In the lower triangular portion we see scatterplots between two features. The red line is a loess curve that somewhat models the relationship between the two variables. The elipse represents the strength of the correlation with the center dot indicating the mean point (mainy of the elipses are centered, so the correlation between features isn't very strong).
 
 # 3. Training a model on the data
+
+### 3.1 Use the lm() method to fit a linear model to the data. Name it energy_model
+
+```{r}
+energy_model = lm(ENERGYSTARScore ~ YearBuilt + PropertyGFATotal + SiteEUIWN.kBtu.sf. + Electricity.kBtu. + NaturalGas.kBtu. + GHGEmissionsIntensity.kgCO2e.ft2., data = modelDat)
+```
+
+### 3.2 Show the estimated Beta coefficients. Explain the results
+
+```{r}
+summary(energy_model)
+```
+
+From this summary output we can see that for each increase in YearBuilt we see a decrease in ENERGYSTARSCore of -5.197e-04. As the PropertyGFATotal increases by one square foot, we can expect an increase in ENERGYSTARScore of 4.047e-06. As Electricity.kBtu. increasees by one kBtu the ENERGYSTARScore increases 3.777e-07. As NaturalGas.kBtu. increases by one kBtu, ENERGYSTARScore decreases by -2.796e-07. As GHGEmissionsIntensity.kgCO2e.ft2. increases by one unit, ENERGYSTARScore increases by 2.325e points. The Adjusted R-squared of 0.1471 indicates that 14.71% of the variation in ENERGYSTARScore is explained by the model.
+
+# 4. Improving model performance
+
+### 4.1
+
