@@ -50,3 +50,7 @@ modelDat = na.omit(modelDat)
 ```{r}
 pairs.panels(modelDat)
 ```
+
+In the upper right trianlge of the matrix we see the correlations between each of the numerical features. Along the main diagonal we see a histogram of each feature's distribution. In the lower triangular portion we see scatterplots between two features. The red line is a loess curve that somewhat models the relationship between the two variables. The elipse represents the strength of the correlation with the center dot indicating the mean point (mainy of the elipses are centered, so the correlation between features isn't very strong).
+
+# 3. Training a model on the data
