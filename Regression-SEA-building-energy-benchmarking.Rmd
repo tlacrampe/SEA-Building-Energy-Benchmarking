@@ -71,5 +71,39 @@ From this summary output we can see that for each increase in YearBuilt we see a
 
 # 4. Improving model performance
 
-### 4.1
+### 4.1 Adding nonlinear relationships
+
+```{r}
+modelDat$YearBuilt2 = modelDat$YearBuilt^2
+```
+
+We can square the year built (and think of it as a relationship) where newer building are more likely to be energy efficient and older building are more likely to be renovated (with the middle section being the least efficient)
+
+### 4.2 Transformation - converting a numerical variable to a binary indicator
+
+```{r}
+modelDat$PropertyGFATotalMedian = ifelse(modelDat$PropertyGFATotal >= median(modelDat$PropertyGFATotal), 1, 0)
+```
+
+Although this might not be useful, we can split the PropertyGFATOTal along the median into two bins and make a dummy variable that may work better.
+
+### 4.3 Model specification - adding interaction effects
+
+```{r}
+ENERGYSTARScore ~ NaturalGas.kBtu.*PropertyGFATotalMedian
+```
+
+### 4.4 Creating a model with these features
+
+```{r}
+energy_model2 = lm(ENERGYSTARScore ~ YearBuilt + YearBuilt2 + PropertyGFATotal + SiteEUIWN.kBtu.sf. + Electricity.kBtu. + NaturalGas.kBtu.*PropertyGFATotalMedian + GHGEmissionsIntensity.kgCO2e.ft2., data = modelDat)
+```
+
+#### 4.4.1 Evaluate model performance with the summary() function
+
+```{r}
+summary(energy_model2)
+```
+
+From this output, we see our adjusted R-squared increase to 0.1651 such that 16.51% of the variation in ENERGYSTARScore is explained by the model. While YearBuilt has become statistically significant at the 1% level, we see sign reversals for some key variables like NaturalGas.kBtu. This seems conterintuitive--an increase in natural gas usage increases the energy star score would be counter productive (we would expect this to be negative). From the low correlations in the exploritory sections and the low R-Squared values and switching signs for the coefficients from our output models, Regression appears to be a poor model for this information. 
 
