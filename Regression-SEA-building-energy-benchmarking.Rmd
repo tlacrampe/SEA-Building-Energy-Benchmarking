@@ -51,7 +51,7 @@ modelDat = na.omit(modelDat)
 pairs.panels(modelDat)
 ```
 
-In the upper right trianlge of the matrix we see the correlations between each of the numerical features. Along the main diagonal we see a histogram of each feature's distribution. In the lower triangular portion we see scatterplots between two features. The red line is a loess curve that somewhat models the relationship between the two variables. The elipse represents the strength of the correlation with the center dot indicating the mean point (mainy of the elipses are centered, so the correlation between features isn't very strong).
+In the upper right triangle of the matrix we see the correlations between each of the numerical features. Along the main diagonal we see a histogram of each feature's distribution. In the lower triangular portion we see scatterplots between two features. The red line is a loess curve that somewhat models the relationship between the two variables. The ellipse represents the strength of the correlation with the center dot indicating the mean point (many of the ellipses are centered, so the correlation between features isn't very strong).
 
 # 3. Training a model on the data
 
@@ -67,7 +67,7 @@ energy_model = lm(ENERGYSTARScore ~ YearBuilt + PropertyGFATotal + SiteEUIWN.kBt
 summary(energy_model)
 ```
 
-From this summary output we can see that for each increase in YearBuilt we see a decrease in ENERGYSTARSCore of -5.197e-04. As the PropertyGFATotal increases by one square foot, we can expect an increase in ENERGYSTARScore of 4.047e-06. As Electricity.kBtu. increasees by one kBtu the ENERGYSTARScore increases 3.777e-07. As NaturalGas.kBtu. increases by one kBtu, ENERGYSTARScore decreases by -2.796e-07. As GHGEmissionsIntensity.kgCO2e.ft2. increases by one unit, ENERGYSTARScore increases by 2.325e points. The Adjusted R-squared of 0.1471 indicates that 14.71% of the variation in ENERGYSTARScore is explained by the model.
+From this summary output we can see that for each increase in YearBuilt we see a decrease in ENERGYSTARScore of -5.197e-04. As the PropertyGFATotal increases by one square foot, we can expect an increase in ENERGYSTARScore of 4.047e-06. As Electricity.kBtu. increases by one kBtu the ENERGYSTARScore increases 3.777e-07. As NaturalGas.kBtu. increases by one kBtu, ENERGYSTARScore decreases by -2.796e-07. As GHGEmissionsIntensity.kgCO2e.ft2. increases by one unit, ENERGYSTARScore increases by 2.325e points. The Adjusted R-squared of 0.1471 indicates that 14.71% of the variation in ENERGYSTARScore is explained by the model.
 
 # 4. Improving model performance
 
@@ -85,7 +85,7 @@ We can square the year built (and think of it as a relationship) where newer bui
 modelDat$PropertyGFATotalMedian = ifelse(modelDat$PropertyGFATotal >= median(modelDat$PropertyGFATotal), 1, 0)
 ```
 
-Although this might not be useful, we can split the PropertyGFATOTal along the median into two bins and make a dummy variable that may work better.
+Although this might not be useful, we can split the PropertyGFATotal along the median into two bins and make a dummy variable that may work better.
 
 ### 4.3 Model specification - adding interaction effects
 
@@ -105,5 +105,5 @@ energy_model2 = lm(ENERGYSTARScore ~ YearBuilt + YearBuilt2 + PropertyGFATotal +
 summary(energy_model2)
 ```
 
-From this output, we see our adjusted R-squared increase to 0.1651 such that 16.51% of the variation in ENERGYSTARScore is explained by the model. While YearBuilt has become statistically significant at the 1% level, we see sign reversals for some key variables like NaturalGas.kBtu. This seems conterintuitive--an increase in natural gas usage increases the energy star score would be counter productive (we would expect this to be negative). From the low correlations in the exploritory sections and the low R-Squared values and switching signs for the coefficients from our output models, Regression appears to be a poor model for this information. 
+From this output, we see our adjusted R-squared increase to 0.1651 such that 16.51% of the variation in ENERGYSTARScore is explained by the model. While YearBuilt has become statistically significant at the 1% level, we see sign reversals for some key variables like NaturalGas.kBtu. This seems conterintuitive--an increase in natural gas usage increases the energy star score would be counter productive (we would expect this to be negative). From the low correlations in the exploratory sections and the low R-Squared values and switching signs for the coefficients from our output models, Regression appears to be a poor model for this information. 
 
