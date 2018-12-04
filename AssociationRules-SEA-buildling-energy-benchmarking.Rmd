@@ -1,0 +1,214 @@
+---
+title: "AssociationRules-SEA-building-energy-bechmarking"
+author: "Christopher Lacrampe"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: 
+  html_document:
+
+    code_folding: show
+    highlight: tango
+    theme: yeti
+    toc: yes
+    toc_depth: 5
+    toc_float: yes
+---
+
+The aim of this predictive model is to be able to create a set of association rules for the categorical variables in the SEA-building-energy-benchmarking-2016 data.
+
+# 1. Loading, cleaning, and preparing the data/libraries
+
+### 1.1 Loading libraries and datasets
+
+```{r}
+library(gmodels) # useful library for CrossTabs/confusion matrices
+library(arules) # has the functions to create rule associations
+library(tidyverse) # has useful libraries for cleaning and filtering data
+energyDat2016 = read.csv("sea-building-energy-benchmarking/2015-building-energy-benchmarking.csv", stringsAsFactors = FALSE)
+```
+
+### 1.2 Cleaning the data
+
+#### 1.2.1 Removing outliers
+Our dataset has come prepared with an **Outlier** feature where the data controller has flagged outliers as "High" and "Low", we will remove those outliers
+
+```{r}
+energyDat2016 = tbl_df(filter(energyDat2016, Outlier == ""))
+energyDat2016 = as.data.frame(energyDat2016)
+```
+
+#### 1.2.2 Create class variable from the Energy Star Score (Good = ENERGYSTARScore > 75, Bad = otherwise as per EnergyStar certification guidelines)
+
+```{r}
+StarScore = ifelse(energyDat2016$ENERGYSTARScore >= 75, "Good", "Bad")
+energyDat2016$StarScore = StarScore
+energyDat2016$StarScore = as.factor(energyDat2016$StarScore)
+```
+
+#### 1.2.3 Create a dataframe utilizing the variables we want to include in our model (this strips redundant variables that are identical to the others just measured in different units)
+
+```{r}
+modelDat = select(energyDat2016, StarScore, YearBuilt, PrimaryPropertyType, BuildingType, Neighborhood, NumberofFloors)
+# remove NA values
+modelDat = na.omit(modelDat)
+```
+
+#### 1.2.4 Coercing all variable in subset to factors to mimic transactional data frames
+
+```{r}
+modelDat$YearBuilt = as.factor(modelDat$YearBuilt)
+modelDat$NumberofFloors = as.factor(modelDat$NumberofFloors)
+modelDat$PrimaryPropertyType = as.factor(modelDat$PrimaryPropertyType)
+modelDat$BuildingType = as.factor(modelDat$BuildingType)
+modelDat$Neighborhood = as.factor(modelDat$Neighborhood)
+transactionDat = as(modelDat, "transactions")
+```
+
+# 2. Exploring transactionDat object
+
+### 2.1 Utilizing indexing to access elements of the object
+
+#### 2.1.1 How to get the basic information about the transaction matrix? Explain the first block of output.
+
+```{r}
+summary(transactionDat)
+```
+
+The first block of the output contains general information: 2488 transactions with 205 distinct items.
+
+#### 2.1.2 How many transactions have 7 items
+
+All the transactions have 7 items (this makes sense based on how we translated our data frame into the transactional matrix using arules)
+
+#### 2.1.3 What is the percentage of the good item appearing in transactions? How about the bad rating for star score?
+
+```{r}
+1277/2488
+1211/2488
+```
+
+51.32% of the transactions have 'good' in them while 48.67% of the transactions have 'bad' in them.
+
+#### 2.1.4 How many items are in 50% of transactions?
+
+```{r}
+itemFrequency(transactionDat[])
+```
+
+The only items that appear in 50% of transaction are StarScore=Good and LargestPropertyUsetType=Multifamily Housing.
+
+#### 2.1.5 How to inspect the 4th, 5th, and 6th transactions? How to see the proportion of transactions that contain the 4th 5th and 6th items? How to explain those later results?
+
+```{r}
+inspect(transactionDat[4:6])
+itemFrequency(transactionDat[,4:6])
+```
+
+### 2.2 Visuualizing the transaction data = plotting the sparse matrix
+
+#### 2.2.1 How to display the sparse matrix for the first 100 transactions/ How about 40 random transactions? Can you provide 2 advantages of using this visualization?
+
+```{r}
+image(transactionDat[1:11])
+image(sample(transactionDat, 50))
+```
+
+2 advantages of using this visualization include its usefulness in identifying potential data issues (e.g. maybe an item is purchased in every transaction or an error was made in encoding information). It is also useful in helping to identify actionable insights if the data is sorted in a specific manner. In our case, we can see the first 100 transactions in the first image.
+
+# 3. Training association rules on the data
+
+### 3.1 How to create sets of rules with the apriori() function? Explain the result and why it is not surprising for our data?
+
+```{r}
+apriori(transactionDat)
+```
+
+The output from performing this operation is a set of 56 rules. While in the lab we had 0 as the default settings are 0.1 for support and 0.8 for confidence, we have several items that occur in greater than 10% of transactions so it makes sense that we have a few rules.
+
+### 3.2 Adjusting support and confidence thresholds to 0.05 and 0.5 respectively. Also setting minlen = 2 to remove rules that contain fewer than two items
+
+```{r}
+energyrules = apriori(transactionDat, parameter = list(support = 0.05, confidence = 0.5, minlen = 2))
+```
+
+### 3.3 How to obtain a high-level overview of the association rules? Explain each part of the output
+
+```{r}
+energyrules
+summary(energyrules)
+```
+
+Our ruleset contains 97 rules. In the first chunk of the output, we can see the count of rules by number of items (i.e.  37 rules of 2 items, 48 rules of 3 items, and 12 rules of 4 items). 
+
+The next section of output includes summary statistics for our rules, where we can see most of the rules expanding beyond our minimum support and confidence thresholds. This indicates that we have good thresholds because if these measures were closer to the threshold then we might have set our thresholds too high. The third column, lift, has values greater than 1 for most rules (1st quartile and onward) which is good. If lift == 1 we would be better off with random chance.
+
+# 4. Evaluating model performance:
+
+### 4.1 How to look at the first three rules in the energyrules object? Explain and discuss the results:
+
+```{r}
+inspect(energyrules[1:3])
+```
+
+
+The results of this output include the left-hand-side (lhs), right-hand-side (rhs), support, confidence, and lift of our rules. For the first rule, we can see that 97.3% of transactions that include primary property type = non-refrigerated warehouse will also include BuildingType=NonResidential. Our second rule indicates that 98.7% of transaction involving PrimaryPropertyType-LargeOffice will include BuildingType=NonResidential. Our third transaction has the highest lift of 4.22, and indicates that in 73% of transactions involving NumberofFloors=6 will also include root PrimaryPropertyType=Mid-Rise Multifamily.
+
+However, we want to also inspect the rules using three criteria: whether the rule is *Actionable*, *Trivial*, or *Inexplicable*. From our output the PrimaryPropertyType=Non-Refrigerated Warehouse->BuildingType=NonResidential rule could be considered trivial as it intuitively makes sense and seems uninteresting. The same holds true for the second rule. Finally, the NumerofFloors=6->PrimaryPropertyType=Mid-Rise Multifamily could be classified as Actionable or Trivial depending upon outlook.
+
+# 4. Improving model performance
+
+### 4.1 Sorting the set of association rules
+
+We can use sort() and select a parameter to inspect and evaluate rules learned by the model
+
+#### 4.1.1 What is the worst 4 rules according to the support statistic?
+
+```{r}
+inspect(sort(energyrules, by = 'support')[95:97])
+```
+
+The worst four rules by support statistic are outlined in the outputs above. We can see that the rule: NumberofFloors=5->StarScore-Good has the third lowest support, with the second to worst rule being BuildingType=NonResidential,Neighborhood=Downtown -> StarScore-Good with a lift of less than 1 as well. The worst/lowest support-based rule is StarScore=Good,Neighborhood=Downtown->BuildingType-NonResidential, which is extremely similar to the 2nd to worst rule.
+
+#### 4.1.2 What are the best 6 rules according to the lift statistic? Explain the results.
+
+```{r}
+inspect(sort(energyrules, by = 'lift')[1:6])
+```
+
+For each of the top 6 rules by lift, each rule has a lift > 5.6. The rule with the highest lift is: BuildingType=NonResidential,Neighborhood=GREATER DUWAMISH-> NumberofFloors=1. This rule makes sense, as the greater duwamish area overlaps with SODO, which is primarily an industrial district. So, most buildings in that region are nonResidential and many of them are warehouses or factories with only 1 floor. Several of the other rules in this category seem just as trivial. 
+
+### 4.2 Taking subsets of association rules
+
+#### 4.2.1 How to do that? Inspect those results and discuss the association rules you found.
+
+```{r}
+goodrules = subset(energyrules, items %in% "StarScore=Good")
+inspect(goodrules)
+```
+
+We can see that there are 36 rules which include StarScore=Good (approximately 1/3 of our total rules). However, the rules we are particularly interested in are those that include StarScore=Good as the left hand side. It seems like building that have 5-6 floors are likely to have StarScore=Good (rules 1-2). We can also see that building in the east-side and the magnolia /queen anne area also are likely to have StarScore=Good (this makes sense due to those area's general affluence). Several more rules are outlined below, the main columns of interest are the confidence and lift.
+
+#### 4.2.2 How to find the rules that have StarScore=Good and PrimaryPropertyType=Mid-Rise Multifamily together with a confidence greater than 30 percent?
+
+```{r}
+goodrules30 = subset(energyrules, items %ain% c("StarScore=Good", "PrimaryPropertyType=Mid-Rise Multifamily"), confidence > 0.30)
+inspect(goodrules30)
+```
+
+We only have 4 association rules with these specifications. However, these association rules are very similar across all 4, with rules 2-4 being almost identical (just differing permutations of the same set of items). 
+
+### 4.3 Saving association rules to a file or data frame
+
+#### 4.3.1 Save the association rules ina csvfile named energyAssociations.csv
+
+```{r}
+write(energyrules, file = "energyAssociations.csv", sep = ",", quote = TRUE, row.names = FALSE)
+```
+
+#### 4.3.2 How to save those association rules as a data frame? Take a look to the structure of this data frame, what do you see?
+
+```{r}
+energyrules_df = as(energyrules, "data.frame")
+str(energyrules_df)
+```
+
+We see a data frame with 97 observations and 5 variables. Variable 1 = rule (lhs -> rhs). Variable 2 = support, variable 3 = confidence, variable 4 = lift, and variable 5 = count. Each observation in this data frame is a separate association rule generated from our parameters we set in section 3.2

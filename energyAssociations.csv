@@ -1,0 +1,98 @@
+"rules","support","confidence","lift","count"
+"{PrimaryPropertyType=Non-Refrigerated Warehouse} => {BuildingType=NonResidential}",0.0570739549839228,0.979310344827586,2.47362856642745,142
+"{PrimaryPropertyType=Large Office} => {BuildingType=NonResidential}",0.0606913183279743,0.986928104575163,2.49287017683554,151
+"{NumberofFloors=6} => {PrimaryPropertyType=Mid-Rise Multifamily}",0.0635048231511254,0.731481481481482,4.22256595342442,158
+"{NumberofFloors=6} => {BuildingType=Multifamily MR (5-9)}",0.0643086816720257,0.740740740740741,4.1790543377845,160
+"{NumberofFloors=6} => {StarScore=Good}",0.057475884244373,0.662037037037037,1.2898575944778,143
+"{NumberofFloors=5} => {PrimaryPropertyType=Mid-Rise Multifamily}",0.0610932475884244,0.669603524229075,3.86536790784672,152
+"{NumberofFloors=5} => {BuildingType=Multifamily MR (5-9)}",0.0618971061093248,0.6784140969163,3.82742465561849,154
+"{NumberofFloors=5} => {StarScore=Good}",0.0534565916398714,0.585903083700441,1.14152456714698,133
+"{Neighborhood=GREATER DUWAMISH} => {NumberofFloors=1}",0.0582797427652733,0.604166666666667,5.16552119129439,145
+"{Neighborhood=GREATER DUWAMISH} => {BuildingType=NonResidential}",0.0819935691318328,0.85,2.14700507614213,204
+"{Neighborhood=GREATER DUWAMISH} => {StarScore=Bad}",0.0622990353697749,0.645833333333333,1.32686484998624,155
+"{PrimaryPropertyType=Small- and Mid-Sized Office} => {BuildingType=NonResidential}",0.0948553054662379,0.983333333333333,2.48379018612521,236
+"{NumberofFloors=2} => {BuildingType=NonResidential}",0.0795819935691318,0.707142857142857,1.78616388687455,198
+"{NumberofFloors=2} => {StarScore=Bad}",0.0602893890675241,0.535714285714286,1.10062522118674,150
+"{NumberofFloors=1} => {BuildingType=NonResidential}",0.103295819935691,0.883161512027491,2.23076735220751,257
+"{NumberofFloors=1} => {StarScore=Bad}",0.0723472668810289,0.618556701030928,1.27082499765892,180
+"{Neighborhood=MAGNOLIA / QUEEN ANNE} => {StarScore=Good}",0.0807877813504823,0.624223602484472,1.21618506106607,201
+"{Neighborhood=EAST} => {StarScore=Good}",0.0727491961414791,0.504178272980501,0.982298780873522,181
+"{Neighborhood=DOWNTOWN} => {BuildingType=NonResidential}",0.0980707395498392,0.617721518987342,1.560295572833,244
+"{Neighborhood=DOWNTOWN} => {StarScore=Good}",0.079983922829582,0.50379746835443,0.981556852988115,199
+"{PrimaryPropertyType=Mid-Rise Multifamily} => {BuildingType=Multifamily MR (5-9)}",0.173231511254019,1,5.64172335600907,431
+"{BuildingType=Multifamily MR (5-9)} => {PrimaryPropertyType=Mid-Rise Multifamily}",0.173231511254019,0.977324263038549,5.64172335600907,431
+"{PrimaryPropertyType=Mid-Rise Multifamily} => {StarScore=Good}",0.114147909967846,0.658932714617169,1.28380939230033,284
+"{BuildingType=Multifamily MR (5-9)} => {StarScore=Good}",0.116961414790997,0.659863945578231,1.28562372482274,291
+"{NumberofFloors=3} => {PrimaryPropertyType=Low-Rise Multifamily}",0.141479099678457,0.667931688804554,1.96664383638548,352
+"{NumberofFloors=3} => {BuildingType=Multifamily LR (1-4)}",0.144694533762058,0.683111954459203,1.96483530947341,360
+"{NumberofFloors=3} => {StarScore=Good}",0.113344051446945,0.535104364326376,1.04255259079407,282
+"{NumberofFloors=4} => {PrimaryPropertyType=Low-Rise Multifamily}",0.181672025723473,0.797178130511464,2.34719430616867,452
+"{PrimaryPropertyType=Low-Rise Multifamily} => {NumberofFloors=4}",0.181672025723473,0.53491124260355,2.34719430616867,452
+"{NumberofFloors=4} => {BuildingType=Multifamily LR (1-4)}",0.186093247588424,0.81657848324515,2.34872516336871,463
+"{BuildingType=Multifamily LR (1-4)} => {NumberofFloors=4}",0.186093247588424,0.535260115606936,2.34872516336871,463
+"{NumberofFloors=4} => {StarScore=Good}",0.117363344051447,0.514991181657848,1.00336574781889,292
+"{PrimaryPropertyType=Low-Rise Multifamily} => {BuildingType=Multifamily LR (1-4)}",0.339630225080386,1,2.87630057803468,845
+"{BuildingType=Multifamily LR (1-4)} => {PrimaryPropertyType=Low-Rise Multifamily}",0.339630225080386,0.976878612716763,2.87630057803468,845
+"{PrimaryPropertyType=Low-Rise Multifamily} => {StarScore=Good}",0.177652733118971,0.523076923076923,1.01911933016083,442
+"{BuildingType=Multifamily LR (1-4)} => {StarScore=Good}",0.182475884244373,0.52485549132948,1.0225845437962,454
+"{BuildingType=NonResidential} => {StarScore=Bad}",0.223472668810289,0.564467005076142,1.15969769498715,556
+"{PrimaryPropertyType=Mid-Rise Multifamily,NumberofFloors=6} => {BuildingType=Multifamily MR (5-9)}",0.0635048231511254,1,5.64172335600907,158
+"{BuildingType=Multifamily MR (5-9),NumberofFloors=6} => {PrimaryPropertyType=Mid-Rise Multifamily}",0.0635048231511254,0.9875,5.70046403712297,158
+"{PrimaryPropertyType=Mid-Rise Multifamily,NumberofFloors=5} => {BuildingType=Multifamily MR (5-9)}",0.0610932475884244,1,5.64172335600907,152
+"{BuildingType=Multifamily MR (5-9),NumberofFloors=5} => {PrimaryPropertyType=Mid-Rise Multifamily}",0.0610932475884244,0.987012987012987,5.69765269533251,152
+"{Neighborhood=GREATER DUWAMISH,NumberofFloors=1} => {BuildingType=NonResidential}",0.0558681672025723,0.958620689655172,2.4213688079818,139
+"{BuildingType=NonResidential,Neighborhood=GREATER DUWAMISH} => {NumberofFloors=1}",0.0558681672025723,0.681372549019608,5.82561821979651,139
+"{BuildingType=NonResidential,NumberofFloors=1} => {Neighborhood=GREATER DUWAMISH}",0.0558681672025723,0.540856031128405,5.60687418936446,139
+"{BuildingType=NonResidential,Neighborhood=GREATER DUWAMISH} => {StarScore=Bad}",0.0554662379421222,0.676470588235294,1.38980910283188,138
+"{StarScore=Bad,Neighborhood=GREATER DUWAMISH} => {BuildingType=NonResidential}",0.0554662379421222,0.890322580645161,2.2488554118225,138
+"{BuildingType=NonResidential,NumberofFloors=1} => {StarScore=Bad}",0.0687299035369775,0.665369649805447,1.36700222024439,171
+"{StarScore=Bad,NumberofFloors=1} => {BuildingType=NonResidential}",0.0687299035369775,0.95,2.39959390862944,171
+"{PrimaryPropertyType=Low-Rise Multifamily,Neighborhood=MAGNOLIA / QUEEN ANNE} => {BuildingType=Multifamily LR (1-4)}",0.0586816720257235,1,2.87630057803468,146
+"{BuildingType=Multifamily LR (1-4),Neighborhood=MAGNOLIA / QUEEN ANNE} => {PrimaryPropertyType=Low-Rise Multifamily}",0.0586816720257235,0.973333333333333,2.86586193293886,146
+"{PrimaryPropertyType=Low-Rise Multifamily,Neighborhood=EAST} => {BuildingType=Multifamily LR (1-4)}",0.0606913183279743,1,2.87630057803468,151
+"{BuildingType=Multifamily LR (1-4),Neighborhood=EAST} => {PrimaryPropertyType=Low-Rise Multifamily}",0.0606913183279743,1,2.94437869822485,151
+"{BuildingType=NonResidential,Neighborhood=DOWNTOWN} => {StarScore=Good}",0.0502411575562701,0.512295081967213,0.998112892665956,125
+"{StarScore=Good,Neighborhood=DOWNTOWN} => {BuildingType=NonResidential}",0.0502411575562701,0.628140703517588,1.58661326939265,125
+"{StarScore=Bad,PrimaryPropertyType=Mid-Rise Multifamily} => {BuildingType=Multifamily MR (5-9)}",0.0590836012861736,1,5.64172335600907,147
+"{StarScore=Bad,BuildingType=Multifamily MR (5-9)} => {PrimaryPropertyType=Mid-Rise Multifamily}",0.0590836012861736,0.98,5.65716937354988,147
+"{PrimaryPropertyType=Mid-Rise Multifamily,BuildingType=Multifamily MR (5-9)} => {StarScore=Good}",0.114147909967846,0.658932714617169,1.28380939230033,284
+"{StarScore=Good,PrimaryPropertyType=Mid-Rise Multifamily} => {BuildingType=Multifamily MR (5-9)}",0.114147909967846,1,5.64172335600907,284
+"{StarScore=Good,BuildingType=Multifamily MR (5-9)} => {PrimaryPropertyType=Mid-Rise Multifamily}",0.114147909967846,0.975945017182131,5.63376149129731,284
+"{PrimaryPropertyType=Low-Rise Multifamily,NumberofFloors=3} => {BuildingType=Multifamily LR (1-4)}",0.141479099678457,1,2.87630057803468,352
+"{BuildingType=Multifamily LR (1-4),NumberofFloors=3} => {PrimaryPropertyType=Low-Rise Multifamily}",0.141479099678457,0.977777777777778,2.87894806048652,352
+"{StarScore=Bad,NumberofFloors=3} => {PrimaryPropertyType=Low-Rise Multifamily}",0.0643086816720257,0.653061224489796,1.92285955802439,160
+"{PrimaryPropertyType=Low-Rise Multifamily,NumberofFloors=3} => {StarScore=Good}",0.0771704180064309,0.545454545454545,1.06271801808215,192
+"{StarScore=Good,NumberofFloors=3} => {PrimaryPropertyType=Low-Rise Multifamily}",0.0771704180064309,0.680851063829787,2.00468336900415,192
+"{StarScore=Bad,NumberofFloors=3} => {BuildingType=Multifamily LR (1-4)}",0.065112540192926,0.661224489795918,1.90188038221069,162
+"{BuildingType=Multifamily LR (1-4),NumberofFloors=3} => {StarScore=Good}",0.0795819935691318,0.55,1.07157400156617,198
+"{StarScore=Good,NumberofFloors=3} => {BuildingType=Multifamily LR (1-4)}",0.0795819935691318,0.702127659574468,2.01953019308818,198
+"{PrimaryPropertyType=Low-Rise Multifamily,NumberofFloors=4} => {BuildingType=Multifamily LR (1-4)}",0.181672025723473,1,2.87630057803468,452
+"{BuildingType=Multifamily LR (1-4),NumberofFloors=4} => {PrimaryPropertyType=Low-Rise Multifamily}",0.181672025723473,0.976241900647948,2.87442585658236,452
+"{PrimaryPropertyType=Low-Rise Multifamily,BuildingType=Multifamily LR (1-4)} => {NumberofFloors=4}",0.181672025723473,0.53491124260355,2.34719430616867,452
+"{StarScore=Bad,NumberofFloors=4} => {PrimaryPropertyType=Low-Rise Multifamily}",0.0872186495176849,0.789090909090909,2.32338246369016,217
+"{StarScore=Bad,PrimaryPropertyType=Low-Rise Multifamily} => {NumberofFloors=4}",0.0872186495176849,0.538461538461538,2.3627730294397,217
+"{PrimaryPropertyType=Low-Rise Multifamily,NumberofFloors=4} => {StarScore=Good}",0.0944533762057878,0.519911504424779,1.01295209319409,235
+"{StarScore=Good,NumberofFloors=4} => {PrimaryPropertyType=Low-Rise Multifamily}",0.0944533762057878,0.804794520547945,2.36961984274945,235
+"{StarScore=Good,PrimaryPropertyType=Low-Rise Multifamily} => {NumberofFloors=4}",0.0944533762057878,0.531674208144796,2.33299017612743,235
+"{StarScore=Bad,NumberofFloors=4} => {BuildingType=Multifamily LR (1-4)}",0.0896302250803859,0.810909090909091,2.3324182869154,223
+"{StarScore=Bad,BuildingType=Multifamily LR (1-4)} => {NumberofFloors=4}",0.0896302250803859,0.542579075425791,2.38084081068672,223
+"{BuildingType=Multifamily LR (1-4),NumberofFloors=4} => {StarScore=Good}",0.0964630225080386,0.518358531317495,1.00992641027246,240
+"{StarScore=Good,NumberofFloors=4} => {BuildingType=Multifamily LR (1-4)}",0.0964630225080386,0.821917808219178,2.36408266687782,240
+"{StarScore=Good,BuildingType=Multifamily LR (1-4)} => {NumberofFloors=4}",0.0964630225080386,0.52863436123348,2.31965130643545,240
+"{StarScore=Bad,PrimaryPropertyType=Low-Rise Multifamily} => {BuildingType=Multifamily LR (1-4)}",0.161977491961415,1,2.87630057803468,403
+"{StarScore=Bad,BuildingType=Multifamily LR (1-4)} => {PrimaryPropertyType=Low-Rise Multifamily}",0.161977491961415,0.980535279805353,2.88706719071683,403
+"{PrimaryPropertyType=Low-Rise Multifamily,BuildingType=Multifamily LR (1-4)} => {StarScore=Good}",0.177652733118971,0.523076923076923,1.01911933016083,442
+"{StarScore=Good,PrimaryPropertyType=Low-Rise Multifamily} => {BuildingType=Multifamily LR (1-4)}",0.177652733118971,1,2.87630057803468,442
+"{StarScore=Good,BuildingType=Multifamily LR (1-4)} => {PrimaryPropertyType=Low-Rise Multifamily}",0.177652733118971,0.973568281938326,2.86655371060657,442
+"{StarScore=Bad,PrimaryPropertyType=Low-Rise Multifamily,NumberofFloors=3} => {BuildingType=Multifamily LR (1-4)}",0.0643086816720257,1,2.87630057803468,160
+"{StarScore=Bad,BuildingType=Multifamily LR (1-4),NumberofFloors=3} => {PrimaryPropertyType=Low-Rise Multifamily}",0.0643086816720257,0.987654320987654,2.90802834392578,160
+"{PrimaryPropertyType=Low-Rise Multifamily,BuildingType=Multifamily LR (1-4),NumberofFloors=3} => {StarScore=Good}",0.0771704180064309,0.545454545454545,1.06271801808215,192
+"{StarScore=Good,PrimaryPropertyType=Low-Rise Multifamily,NumberofFloors=3} => {BuildingType=Multifamily LR (1-4)}",0.0771704180064309,1,2.87630057803468,192
+"{StarScore=Good,BuildingType=Multifamily LR (1-4),NumberofFloors=3} => {PrimaryPropertyType=Low-Rise Multifamily}",0.0771704180064309,0.96969696969697,2.85515510130895,192
+"{StarScore=Bad,PrimaryPropertyType=Low-Rise Multifamily,NumberofFloors=4} => {BuildingType=Multifamily LR (1-4)}",0.0872186495176849,1,2.87630057803468,217
+"{StarScore=Bad,BuildingType=Multifamily LR (1-4),NumberofFloors=4} => {PrimaryPropertyType=Low-Rise Multifamily}",0.0872186495176849,0.973094170403587,2.86515774670311,217
+"{StarScore=Bad,PrimaryPropertyType=Low-Rise Multifamily,BuildingType=Multifamily LR (1-4)} => {NumberofFloors=4}",0.0872186495176849,0.538461538461538,2.3627730294397,217
+"{PrimaryPropertyType=Low-Rise Multifamily,BuildingType=Multifamily LR (1-4),NumberofFloors=4} => {StarScore=Good}",0.0944533762057878,0.519911504424779,1.01295209319409,235
+"{StarScore=Good,PrimaryPropertyType=Low-Rise Multifamily,NumberofFloors=4} => {BuildingType=Multifamily LR (1-4)}",0.0944533762057878,1,2.87630057803468,235
+"{StarScore=Good,BuildingType=Multifamily LR (1-4),NumberofFloors=4} => {PrimaryPropertyType=Low-Rise Multifamily}",0.0944533762057878,0.979166666666667,2.88303747534517,235
+"{StarScore=Good,PrimaryPropertyType=Low-Rise Multifamily,BuildingType=Multifamily LR (1-4)} => {NumberofFloors=4}",0.0944533762057878,0.531674208144796,2.33299017612743,235
